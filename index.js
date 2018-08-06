@@ -5,13 +5,6 @@ const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 const config = require("./config");
 const fs = require("fs");
-const _data = require("./lib/data");
-
-// Testing
-
-_data.delete("test", "File1", function(err, data) {
-  console.log("This was the error", err);
-});
 
 // create server
 
