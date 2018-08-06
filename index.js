@@ -3,6 +3,16 @@
 const http = require("http");
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
+const config = require("./config");
+const fs = require("fs");
+const _data = require("./lib/data");
+
+// Testing
+
+_data.delete("test", "File1", function(err, data) {
+  console.log("This was the error", err);
+});
+
 // create server
 
 const server = http.createServer((req, res) => {
@@ -71,17 +81,24 @@ const server = http.createServer((req, res) => {
 });
 
 // Listen on server
-server.listen(3000, () => {
-  console.log("The server is listening on port 3000 now !!");
+server.listen(config.port, () => {
+  console.log(
+    "The server is listening on port " +
+      config.port +
+      " in " +
+      config.envName +
+      " node !!"
+  );
 });
 
 // Define handlers
 
 var handlers = {};
 
-handlers.sample = function(data, callback) {
+//ping handler
+handlers.ping = function(data, callback) {
   // Callback a http status code,and a payload object.
-  callback(406, { name: "sample handler" });
+  callback(200);
 };
 
 handlers.notFound = function(data, callback) {
@@ -91,5 +108,5 @@ handlers.notFound = function(data, callback) {
 // Define a request router
 
 var router = {
-  sample: handlers.sample
+  ping: handlers.ping
 };
