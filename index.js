@@ -5,6 +5,8 @@ const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 const config = require("./config");
 const fs = require("fs");
+const helpers = require("./lib/helpers");
+const handlers = require("./lib/handlers");
 
 // create server
 
@@ -49,7 +51,7 @@ const server = http.createServer((req, res) => {
       queryStringObject: queryStringObject,
       method: method,
       headers: headers,
-      payload: buffer
+      payload: helpers.parseJsonToObject(buffer)
     };
 
     chosenHandler(data, function(statusCode, payload) {
@@ -84,22 +86,9 @@ server.listen(config.port, () => {
   );
 });
 
-// Define handlers
-
-var handlers = {};
-
-//ping handler
-handlers.ping = function(data, callback) {
-  // Callback a http status code,and a payload object.
-  callback(200);
-};
-
-handlers.notFound = function(data, callback) {
-  callback(404);
-};
-
 // Define a request router
 
 var router = {
-  ping: handlers.ping
+  ping: handlers.ping,
+  users: handlers.users
 };

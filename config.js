@@ -2,12 +2,14 @@ const environments = {};
 
 environments.staging = {
   port: 3000,
-  envName: "staging"
+  envName: "staging",
+  hashingSecret: "thisIsASecret"
 };
 
 environments.production = {
   port: 3000,
-  envName: "production"
+  envName: "production",
+  hashingSecret: "thisIsASecret"
 };
 
 const currentEnvironment =
